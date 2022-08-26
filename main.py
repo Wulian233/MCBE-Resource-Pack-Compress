@@ -7,7 +7,7 @@ import json
 #我就要用中文命名变量，哼~
 def 选文件():
     num=stater.get()
-    路径 = filedialog.askopenfilename(filetypes=[("纹理包", "*.mcpack")])
+    路径 = filedialog.askopenfilename(filetypes=[("资源包", "*.mcpack")])
     #获取选择的文件前缀名
     前缀 = os.path.basename(路径).split('.')[0]
     os.rename(路径, 路径 + ".zip")
@@ -33,9 +33,9 @@ def 选文件():
                     结构数 += 1
                     os.remove(os.path.join(root, file))
         if(json数 & 结构数== 0):
-            messagebox.showinfo("提示","所选纹理包不存在任何json和mcstructure文件，压缩效果不明显！")
+            messagebox.showinfo("提示","当前资源包已经被压缩或\n所选纹理包不存在任何json和mcstructure文件，压缩效果不明显！")
         else:
-            messagebox.showinfo("提示","压缩成功！！！\n共压缩了{}个json文件".format(json数)+"\n删除了共{}个mcstructure文件".format(结构数))
+            messagebox.showinfo("提示","压缩成功！\n共压缩了{}个json文件".format(json数)+"\n共删除了共{}个mcstructure文件".format(结构数))
     #解压文件，等待解压完成删除压缩包
     with zipfile.ZipFile(路径2, 'r') as zip_ref:
         zip_ref.extractall()
@@ -57,7 +57,7 @@ def 选文件():
         # 删除解压的文件夹  
     os.system("rd /s /q " + 前缀)
 def 更新():
-    messagebox.showinfo("更新内容","此版本是第一个版本，还木有更新内容。")
+    messagebox.showinfo("更新内容","修改纹理包不存在任何json和mcstructure文件的描述，因为还可能是当前资源包已经被压缩。\n细节优化。")
 def git():
     web('https://github.com/Wulian233/MCBE-Resource-Pack-Compress',new=1,autoraise=True)
 def B站():
@@ -66,7 +66,7 @@ def 石():
     messagebox.askquestion("↑ 没事可以咬个打火石 ↓","少年，我看你才华横溢，仪表不凡，是个咬打火石的好苗子！确定咬吗？")
     web('https://minecraft.fandom.com/zh/wiki/打火石',new=1,autoraise=True)
 def 啥():
-    messagebox.showinfo("有什么区别？","一般地，LZMA压缩率高，但慢。默认是最好，最稳定的选择")
+    messagebox.showinfo("有什么区别？","一般地，LZMA压缩率高，但慢。默认是最好且最稳定的选择。")
 def 原理():
     messagebox.showinfo("原理是什么 ？","这个方法很简单 ，我用了三种方法压缩：\n1. 将资源包解压再压缩；\n2. 将所有json内的空格替换为空；\n3. 对于投影资源包，删除所有.mcstructure文件。")
 窗 = tkinter.Tk()
