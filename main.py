@@ -8,19 +8,31 @@ import json
 def 选文件():
     num=stater.get()
     路径 = filedialog.askopenfilename(filetypes=[("资源包", "*.mcpack")])
-    #获取选择的文件前缀名
     前缀 = os.path.basename(路径).split('.')[0]
     os.rename(路径, 路径 + ".zip")
     路径2 = 路径 + ".zip"
     def json压缩():
-        json数,结构数 = 0,0
+        json数,结构数,材质 = 0,0,0
         files = os.listdir(前缀)
         for root,dirs , files in os.walk(前缀):
-            for file in files:  # 遍历目录里的所有文件
+            for file in files:
                 if file.endswith(".json"):
                     json数 += 1
                     print("path == ",file)
-                    #批量打开json文件，将其中的空格替换为空
+                    with open(os.path.join(root,file),'r') as load_f:
+                        load_dict = json.load(load_f)
+                    你好=len(load_dict)
+                    for i in range (0,你好):#批量打开文件，将其中的空格替换为空
+                        if load_dict == ' ':
+                            load_dict = ''
+                        with open(os.path.join(root,file),'w') as dump_f:
+                            json.dump(load_dict, dump_f)
+                elif file.endswith(".mcstructure"):
+                    结构数 += 1
+                    os.remove(os.path.join(root, file))
+                elif file.endswith(".material"):
+                    材质 += 1
+                    print("path == ",file)
                     with open(os.path.join(root,file),'r') as load_f:
                         load_dict = json.load(load_f)
                     你好=len(load_dict)
@@ -29,20 +41,15 @@ def 选文件():
                             load_dict = ''
                         with open(os.path.join(root,file),'w') as dump_f:
                             json.dump(load_dict, dump_f)
-                elif file.endswith(".mcstructure"):
-                    结构数 += 1
-                    os.remove(os.path.join(root, file))
         if(json数 & 结构数== 0):
             messagebox.showinfo("提示","当前资源包已经被压缩或\n所选纹理包不存在任何json和mcstructure文件，压缩效果不明显！")
         else:
-            messagebox.showinfo("提示","压缩成功！\n共压缩了{}个json文件".format(json数)+"\n共删除了共{}个mcstructure文件".format(结构数))
-    #解压文件，等待解压完成删除压缩包
+            messagebox.showinfo('提示','{}'.format(前缀)+'压缩成功！\n共压缩了{}个json文件'.format(json数)+'\n共压缩了{}个material文件'.format(材质)+'\n共删除了共{}个mcstructure文件'.format(结构数))
     with zipfile.ZipFile(路径2, 'r') as zip_ref:
-        zip_ref.extractall()
+        zip_ref.extractall(前缀)
         zip_ref.close()
         os.remove(路径2)
-        def zip(模式):
-            #压缩全部文件
+        def zip(模式):            #压缩全部文件
             with zipfile.ZipFile(前缀+".mcpack", 'w',模式) as zip_ref:
                 for root, dirs, files in os.walk(前缀):
                     for file in files:
@@ -53,11 +60,10 @@ def 选文件():
     if num==1:
         zip(zipfile.ZIP_DEFLATED)
     elif num==2:
-        zip(zipfile.ZIP_LZMA)
-        # 删除解压的文件夹  
-    os.system("rd /s /q " + 前缀)
+        zip(zipfile.ZIP_LZMA)  
+    os.system("rd /s /q " + 前缀)# 删除解压的文件夹
 def 更新():
-    messagebox.showinfo("更新内容","修改纹理包不存在任何json和mcstructure文件的描述，因为还可能是当前资源包已经被压缩。\n细节优化。")
+    messagebox.showinfo("更新内容","支持.material压缩，现在一些光影什么的压缩率更高；\n现在压缩成功后会显示文件的名字；\n代码优化，应该提高了点兼容性。")
 def git():
     web('https://github.com/Wulian233/MCBE-Resource-Pack-Compress',new=1,autoraise=True)
 def B站():
@@ -68,7 +74,7 @@ def 石():
 def 啥():
     messagebox.showinfo("有什么区别？","一般地，LZMA压缩率高，但慢。默认是最好且最稳定的选择。")
 def 原理():
-    messagebox.showinfo("原理是什么 ？","这个方法很简单 ，我用了三种方法压缩：\n1. 将资源包解压再压缩；\n2. 将所有json内的空格替换为空；\n3. 对于投影资源包，删除所有.mcstructure文件。")
+    messagebox.showinfo("原理是什么 ？","这个方法很简单 ，我用了三种方法压缩：\n1. 将资源包解压再压缩；\n2. 将所有json和material内的空格替换为空；\n3. 对于投影资源包，删除所有.mcstructure文件。")
 窗 = tkinter.Tk()
 窗.title("基岩版通用资源包压缩工具")
 窗.geometry("380x350")
