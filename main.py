@@ -1,10 +1,10 @@
-﻿import zipfile,os,json,sys,threading,sv_ttk,tkinter as tk
+﻿import zipfile,os,json,sys,threading,tkinter as tk
 from tkinter import filedialog,scrolledtext,ttk,messagebox as 弹窗
 from webbrowser import open as web
 #我就要用中文命名变量，哼~
 
 def 更新():
-    弹窗.showinfo("更新内容","新增美化主题，页面变漂亮了！\n未选择文件会提示，不会报错。\n压缩成功后的弹窗代码层面用f-string，精简代码\nprint重定向到文本框，展示压缩文件及更多信息！")
+    弹窗.showinfo("更新内容","未选择文件会提示，不会报错。\n压缩成功后的弹窗代码层面用f-string，精简代码\nprint重定向到文本框，展示压缩文件及更多信息！")
 def git():
     web('https://github.com/Wulian233/MCBE-Resource-Pack-Compress',new=1,autoraise=True)
 def B站():
@@ -99,7 +99,6 @@ def 选文件():
         zip(zipfile.ZIP_LZMA)  
     os.system("rd /s /q " + 前缀)#删除解压的文件夹
 
-
 class StdoutRedirector(object):# 重定向输出类
     def __init__(self,text_widget):# 将其备份
         self.text_space = text_widget
@@ -116,16 +115,15 @@ class StdoutRedirector(object):# 重定向输出类
         pass
 
 窗 = tk.Tk()
-sv_ttk.use_light_theme()
-窗.title("基岩版通用资源包压缩工具")
+窗.title("基岩版通用资源包压缩工具 by 捂脸祖")
 窗.geometry("780x350+950+340")
 窗.resizable(0,0)
-输出框 = scrolledtext.ScrolledText(窗, relief="solid", width=36, height=13)
+输出框 = scrolledtext.ScrolledText(窗, relief="solid", width=39, height=16)
 输出框.place(x=400, y=10)
 输出框.insert('1.0','日志输出和压缩进度将在此显示\n')
 sys.stdout = StdoutRedirector(输出框)
 tk.Label(窗,text="请选择一种压缩算法模式，推荐默认",font=("微软雅黑",11)).place(x=50,y=5)
-模式=tk.IntVar()
+模式 = tk.IntVar()
 菜单 = tk.Menu(窗)
 窗.config(menu = 菜单)
 关于 = tk.Menu(菜单, tearoff=False)
@@ -137,6 +135,6 @@ tk.ttk.Radiobutton(窗,text="默认",variable=模式,value=1,command=选文件).
 tk.ttk.Radiobutton(窗,text="LZMA",variable=模式,value=2,command=选文件).place(x=120,y=50)
 tk.ttk.Button(窗,text="？",command=啥,width=2).place(x=240,y=40)
 tk.ttk.Button(窗,text="更新内容",command=更新,width=8).place(x=290,y=40)
-tk.ttk.Button(窗,text="机",command=石).place(x=-1,y=342)
-tk.Label(窗,text="这个工具由捂脸（Wulian233）制作。\n对于投影可以压缩为原本的百分之一，原体\n积越大压缩率越大；UI、红石辅助类等资源包，\n也可以有效压缩。",font=("微软雅黑",11)).place(x=5,y=120)
+tk.ttk.Button(窗,text="机",command=石,width=3).place(x=-1,y=345)
+tk.Label(窗,text="对于投影可以压缩为原本的百分之一，原体\n积越大压缩率越大；UI、红石辅助类等资源包，\n也可以有效压缩。",font=("微软雅黑",11)).place(x=5,y=120)
 窗.mainloop()
