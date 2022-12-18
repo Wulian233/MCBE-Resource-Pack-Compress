@@ -1,10 +1,10 @@
  ### 基岩版资源包压缩工具
   
- ![请联网查看图片](https://horrion.top/saomu/1.png)
+ ![请联网查看图片](http://horrion.top/saomu/1.png)
 [![Github All Releases](https://img.shields.io/github/downloads/Wulian233/MCBE-Resource-Pack-Compress/total.svg)]()
  ## 怎么使用？
  
- 这里有两种使用方式：**下载EXE程序**，方便快捷，但是体积大，打开速度可能较慢；**.py源代码**，需要安装Python环境，比第一种较复杂，但一劳永逸，且速度较快。请自行斟酌使用。
+ 这里有两种使用方式：**下载EXE程序**，方便快捷，但是体积大；**.py源代码**，需要安装Python环境，比第一种较复杂，但一劳永逸。请自行斟酌使用。
 
  1. EXE方法：前往本项目的[Releases](https://github.com/Wulian233/MCBE-Resource-Pack-Compress/releases/)页面下载exe文件，解压使用。
  2. 源代码方法：前往本项目的[Releases](https://github.com/Wulian233/MCBE-Resource-Pack-Compress/releases/)页面下载源代码zip并解压。之后安装Python解释器，win10及以上安装[最新版](https://www.python.org/downloads/release/python-3105/)即可。win7最高支持[3.8.6](https://www.python.org/downloads/release/python-386/)版本，请一定安装正确的版本。最后双击main.py文件即可。
